@@ -5,51 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Document</title>
 </head>
 
 <body>
-    <video controls></video>
 
-    <script>
+    <p>
+        <button id="start">Start Capture</button>&nbsp;<button id="stop">
+            Stop Capture
+        </button>
+    </p>
 
-        const start = async () => {
-            const stream = await navigator.mediaDevices.getDisplayMedia(
-                {
-                    video: {
-                        mediaSource: "screen"
-                    }
-                }
-            )
+    <video id="video" autoplay controls></video>
+    <br />
 
-            const data = [];
+    <strong>Log:</strong>
+    <br />
+    <pre id="log"></pre>
 
-            const mediaRecorder = new MediaRecorder(stream);
 
-            mediaRecorder.ondataavailable = (e) => {
-                data.push(e.data);
-                document.querySelector("video").src = URL.createObjectURL(
-                    new Blob(data, {
-                        type: data[0].type
-                    })
-                )
-            }
-
-            mediaRecorder.start();
-
-            mediaRecorder.onstop = (e) => {
-                document.querySelector("video").src = URL.createObjectURL(
-                    new Blob(data, {
-                        type: data[0].type
-                    })
-                )
-            }
-
-        }
-
-        start()
-
-    </script>
+    <script src="index.js"></script>
 </body>
 
 </html>
